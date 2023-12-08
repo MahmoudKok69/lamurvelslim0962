@@ -21,6 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'gender',
+        'points',
+        'address',
+        'phone_number',
+        'group_id',
+        'avatar',
+        'age',
     ];
 
     /**
@@ -41,4 +48,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function achieved_athkars(){
+        return $this->hasMany(AchievedAthkar::class, 'user_id');
+    }
+
+    public function achieved_qurans(){
+        return $this->hasMany(AchievedQuran::class, 'user_id');
+    }
+
+    public function achieved_ethiks(){
+        return $this->hasMany(AchievedEthic::class, 'user_id');
+    }
+    public function group(){
+        return $this->belongsTo(Group::class, 'group_id');
+    }
+    public function achieved_quizzes(){
+        return $this->hasMany(UserQuiz::class, 'user_id');
+    }
+
+    public function quizzes(){
+        return $this->belongsToMany(Quiz::class, 'user_quizzes');
+    }
+
+
 }
